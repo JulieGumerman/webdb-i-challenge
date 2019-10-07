@@ -12,14 +12,14 @@ server.get("/", (req, res) => {
     res.send("Haiiii!")
   })
 
-///***to "/api/accounts" ****/
-server.get("/api/accounts", (req, res) => {
-    db
-        .select("*").from("accounts")
-        .then(accounts => res.status(200).json(accounts))
-        .catch(err => res.status(500).json({ error: "You done messed up"}))
+/***to "/api/accounts" ****/
+// server.get("/api/accounts", (req, res) => {
+//     db
+//         .select("*").from("accounts")
+//         .then(accounts => res.status(200).json(accounts))
+//         .catch(err => res.status(500).json({ error: "You done messed up"}))
         
-})
+// })
 
 server.post("/api/accounts", (req, res) => {
     const data = req.body;
@@ -48,5 +48,13 @@ server.delete("/api/accounts/:id", (req, res) => {
         .then(item => res.status(200).json(item))
         .catch(err => res.status(500).json({ message: "too good to delete"}))
 })
-
+///***** stretch with limit: IT WORKS!!!*****/
+server.get("/api/accounts", (req, res) => {
+    db
+        .select("*").from("accounts").orderBy(req.body.sortby).limit(req.body.limit)
+        .then(accounts => res.status(200).json(accounts))
+        .catch(err => res.status(500).json({ error: "You done messed up"}))
+        
+})
+/****export****/
 module.exports = server;
