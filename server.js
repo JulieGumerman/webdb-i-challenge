@@ -23,7 +23,7 @@ server.get("/api/accounts", (req, res) => {
 
 server.post("/api/accounts", (req, res) => {
     const data = req.body;
-    db("accounts").insert(data, "id")
+    db("accounts").insert(data)
         .then(ids => {res.status(200).json(ids)})
         .catch(error => {res.status(500).json(error)})
 })
