@@ -37,4 +37,16 @@ server.get("/api/accounts/:id", (req, res) => {
         .catch(err => res.status(500).json({ error: "Oh noes!!!"}))
 })
 
+server.put("/api/accounts/:id", (req, res) => {
+    db("accounts").where({id: req.params.id})
+        .then(update => res.status(200).json(req.body))
+        .catch(err => res.status(500).json({ message: "leave well enough alone"}))
+})
+
+server.delete("/api/accounts/:id", (req, res) => {
+    db("accounts").where({ id: req.params.id}).delete()
+        .then(item => res.status(200).json(item))
+        .catch(err => res.status(500).json({ message: "too good to delete"}))
+})
+
 module.exports = server;
